@@ -7,10 +7,13 @@ namespace BasicBlockChain
     public class BlockChain
     {
         public List<Block> Chain { get; } = new List<Block>();
+        public int Difficulty { get; set; } = 2;
 
-        public BlockChain(DateTime? genesisDate = null)
+        public BlockChain(DateTime? genesisDate = null, int difficulty = 2)
         {
             Block genesisBlock = new Block(genesisDate ?? DateTime.UtcNow, null, "{}");
+            genesisBlock.Mine(difficulty);
+            Difficulty = difficulty;
             Chain.Add(genesisBlock);
         }
 
@@ -18,6 +21,7 @@ namespace BasicBlockChain
         {
             Block lastBlock = Chain.Last();
             Block newBlock = new Block(date, lastBlock, data);
+            newBlock.Mine(Difficulty);
             Chain.Add(newBlock);
         }
 

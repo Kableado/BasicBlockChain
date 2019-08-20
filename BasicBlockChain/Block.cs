@@ -19,6 +19,7 @@ namespace BasicBlockChain
             Date = date;
             PreviousHash = previousBlock?.Hash;
             Data = data;
+            Nonce = 0;
             Hash = CalculateHash();
         }
 

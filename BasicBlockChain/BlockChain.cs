@@ -11,16 +11,16 @@ namespace BasicBlockChain
 
         public BlockChain(DateTime? genesisDate = null, int difficulty = 2)
         {
-            Block genesisBlock = new Block(genesisDate ?? DateTime.UtcNow, null, "{}");
+            Block genesisBlock = new Block(genesisDate ?? DateTime.UtcNow, null, null);
             genesisBlock.Mine(difficulty);
             Difficulty = difficulty;
             Chain.Add(genesisBlock);
         }
 
-        public void AddData(DateTime date, string data)
+        public void AddBlock(DateTime date, IList<Transaction> transactions)
         {
             Block lastBlock = Chain.Last();
-            Block newBlock = new Block(date, lastBlock, data);
+            Block newBlock = new Block(date, lastBlock, transactions);
             newBlock.Mine(Difficulty);
             Chain.Add(newBlock);
         }
@@ -39,6 +39,31 @@ namespace BasicBlockChain
                 }
             }
             return true;
+        }
+
+        public long GetMicroCoinBalance(string receiver)
+        {
+            long microCoinBalance = 0;
+
+            for (int i = 0; i < Chain.Count; i++)
+            {
+                for (int j = 0; j < Chain[i].Transactions.Count; j++)
+                {
+                    var transaction = Chain[i].Transactions[j];
+
+                    if (transaction.Sender == receiver)
+                    {
+                        microCoinBalance -= transaction.MicroCoinAmount;
+                    }
+
+                    if (transaction.Receiver == receiver)
+                    {
+                        microCoinBalance += transaction.MicroCoinAmount;
+                    }
+                }
+            }
+
+            return microCoinBalance;
         }
     }
 }

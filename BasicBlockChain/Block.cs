@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -9,25 +10,38 @@ namespace BasicBlockChain
         public int Index { get; set; }
         public DateTime Date { get; set; }
         public string PreviousHash { get; set; }
-        public string Data { get; set; }
+        public List<Transaction> Transactions { get; } = new List<Transaction>();
         public string Hash { get; set; }
         public int Nonce { get; set; }
 
-        public Block(DateTime date, Block previousBlock, string data)
+        public Block(DateTime date, Block previousBlock, IList<Transaction> transactions)
         {
             Index = (previousBlock?.Index ?? -1) + 1;
             Date = date;
             PreviousHash = previousBlock?.Hash;
-            Data = data;
+            if (transactions != null) { Transactions.AddRange(transactions); }
             Nonce = 0;
             Hash = CalculateHash();
         }
 
-        public string CalculateHash()
+        private string GetData()
         {
-            SHA256 sha256 = SHA256.Create();
+            VAR.Json.JsonWriter jsonWriter = new VAR.Json.JsonWriter(1);
+            return jsonWriter.Write(Transactions);
+        }
 
-            byte[] dataBytes = Encoding.UTF8.GetBytes(string.Format("{0}-{1}-{2}-{3}", Date, PreviousHash, Data, Nonce));
+        public string CalculateHash(string data = null, SHA256 sha256 = null)
+        {
+            if (sha256 == null) { sha256 = SHA256.Create(); }
+            if (data == null)
+            {
+                data = GetData();
+            }
+            byte[] dataBytes = Encoding.UTF8.GetBytes(string.Format("{0}-{1}-{2}-{3}",
+                Date,
+                PreviousHash,
+                data,
+                Nonce));
             byte[] hashBytes = sha256.ComputeHash(dataBytes);
 
             string hash = Convert.ToBase64String(hashBytes);
@@ -36,11 +50,13 @@ namespace BasicBlockChain
 
         public void Mine(int difficulty)
         {
+            SHA256 sha256 = SHA256.Create();
             var leadingZeros = new string('0', difficulty);
+            string data = GetData();
             while (Hash.Substring(0, difficulty) != leadingZeros)
             {
                 Nonce++;
-                Hash = CalculateHash();
+                Hash = CalculateHash(data, sha256);
             }
         }
     }

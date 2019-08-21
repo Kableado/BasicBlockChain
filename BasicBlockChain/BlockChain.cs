@@ -6,14 +6,17 @@ namespace BasicBlockChain
 {
     public class BlockChain
     {
+        private List<Transaction> _pendingTransactions = new List<Transaction>();
         public List<Block> Chain { get; } = new List<Block>();
         public int Difficulty { get; set; } = 2;
+        public int Reward { get; set; } = 1_000_000;
 
-        public BlockChain(DateTime? genesisDate = null, int difficulty = 2)
+        public BlockChain(DateTime? genesisDate = null, int difficulty = 2, int reward = 1_000_000)
         {
             Block genesisBlock = new Block(genesisDate ?? DateTime.UtcNow, null, null);
             genesisBlock.Mine(difficulty);
             Difficulty = difficulty;
+            Reward = 1_000_000;
             Chain.Add(genesisBlock);
         }
 
@@ -23,6 +26,21 @@ namespace BasicBlockChain
             Block newBlock = new Block(date, lastBlock, transactions);
             newBlock.Mine(Difficulty);
             Chain.Add(newBlock);
+        }
+
+        public void AddTransaction(Transaction transaction)
+        {
+            _pendingTransactions.Add(transaction);
+        }
+
+        public void ProcessPendingTransactions(DateTime date, string miner)
+        {
+            Block lastBlock = Chain.Last();
+            Block newBlock = new Block(date, lastBlock, _pendingTransactions);
+            newBlock.Transactions.Add(new Transaction(null, miner, Reward, date));
+            newBlock.Mine(Difficulty);
+            Chain.Add(newBlock);
+            _pendingTransactions.Clear();
         }
 
         public bool Verify()

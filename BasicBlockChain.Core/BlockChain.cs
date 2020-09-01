@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BasicBlockChain
+namespace BasicBlockChain.Core
 {
     public class BlockChain
     {

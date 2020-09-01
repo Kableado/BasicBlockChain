@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using VAR.Json;
 
-namespace BasicBlockChain
+namespace BasicBlockChain.Core
 {
     public class Block
     {
@@ -26,8 +27,7 @@ namespace BasicBlockChain
 
         private string GetData()
         {
-            VAR.Json.JsonWriter jsonWriter = new VAR.Json.JsonWriter(1);
-            return jsonWriter.Write(Transactions);
+            return JsonWriter.WriteObject(Transactions);
         }
 
         public string CalculateHash(string data = null, SHA256 sha256 = null)

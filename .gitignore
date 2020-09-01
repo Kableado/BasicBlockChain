@@ -1,4 +1,4 @@
 /.vs/*
-/BasicBlockChain/bin/*
-/BasicBlockChain/obj/*
+*/bin/*
+*/obj/*
 /packages/

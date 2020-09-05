@@ -16,12 +16,12 @@ namespace BasicBlockChain
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtTo.Text) || string.IsNullOrEmpty(txtFrom.Text) || string.IsNullOrEmpty(txtAmount.Text)) { return; }
-            long amount = Convert.ToInt64(txtAmount.Text);
+            if (string.IsNullOrEmpty(txtTo.Text) || string.IsNullOrEmpty(txtFrom.Text)) { return; }
+            long amount = (long)numAmount.Value;
             _nullCoin.AddTransaction(new Transaction(txtFrom.Text, txtTo.Text, amount, DateTime.UtcNow));
             txtTo.Text = string.Empty;
             txtFrom.Text = string.Empty;
-            txtAmount.Text = string.Empty;
+            numAmount.Value = 0;
             Lists_Update();
         }
 
@@ -30,6 +30,21 @@ namespace BasicBlockChain
             if (string.IsNullOrEmpty(txtMinerName.Text)) { return; }
             _nullCoin.ProcessPendingTransactions(DateTime.UtcNow, txtMinerName.Text);
             Lists_Update();
+        }
+
+        private void btnClearFrom_Click(object sender, EventArgs e)
+        {
+            txtFrom.Text = string.Empty;
+        }
+
+        private void btnClearTo_Click(object sender, EventArgs e)
+        {
+            txtTo.Text = string.Empty;
+        }
+
+        private void btnClearAmount_Click(object sender, EventArgs e)
+        {
+            numAmount.Value = 0;
         }
 
         private void Lists_Update()
@@ -48,11 +63,45 @@ namespace BasicBlockChain
             {
                 lsbPendingTransactions.Items.Add(Transaction_ToString(transaction));
             }
+
+            lsbUsers.Items.Clear();
+            foreach (string user in _nullCoin.Users)
+            {
+                long amount = _nullCoin.GetMicroCoinBalance(user);
+                lsbUsers.Items.Add(new Wallet { User = user, Amount = amount });
+            }
+        }
+
+        public class Wallet
+        {
+            public string User { get; set; }
+            public long Amount { get; set; }
+
+            public override string ToString()
+            {
+                return string.Format("{0} - {1}", User, Amount);
+            }
         }
 
         private string Transaction_ToString(Transaction transaction)
         {
             return string.Format("{0} - {1} - {2} - {3}", transaction.Date, transaction.Sender, transaction.Receiver, transaction.MicroCoinAmount);
+        }
+
+        private void lsbUsers_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Wallet wallet = (Wallet)lsbUsers.SelectedItem;
+            if (wallet == null) { return; }
+            if (string.IsNullOrEmpty(txtFrom.Text))
+            {
+                txtFrom.Text = wallet.User;
+                return;
+            }
+            if (string.IsNullOrEmpty(txtTo.Text))
+            {
+                txtTo.Text = wallet.User;
+                return;
+            }
         }
     }
 }

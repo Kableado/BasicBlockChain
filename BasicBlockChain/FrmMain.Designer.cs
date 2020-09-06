@@ -33,17 +33,17 @@
             this.lsbPendingTransactions = new System.Windows.Forms.ListBox();
             this.btnMine = new System.Windows.Forms.Button();
             this.grpAddTransaction = new System.Windows.Forms.GroupBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.lblFrom = new System.Windows.Forms.Label();
-            this.lblTo = new System.Windows.Forms.Label();
-            this.lblAmount = new System.Windows.Forms.Label();
-            this.txtMinerName = new System.Windows.Forms.TextBox();
-            this.txtFrom = new System.Windows.Forms.TextBox();
-            this.txtTo = new System.Windows.Forms.TextBox();
-            this.numAmount = new System.Windows.Forms.NumericUpDown();
-            this.btnClearFrom = new System.Windows.Forms.Button();
-            this.btnClearTo = new System.Windows.Forms.Button();
             this.btnClearAmount = new System.Windows.Forms.Button();
+            this.btnClearTo = new System.Windows.Forms.Button();
+            this.btnClearFrom = new System.Windows.Forms.Button();
+            this.numAmount = new System.Windows.Forms.NumericUpDown();
+            this.txtTo = new System.Windows.Forms.TextBox();
+            this.txtFrom = new System.Windows.Forms.TextBox();
+            this.lblAmount = new System.Windows.Forms.Label();
+            this.lblTo = new System.Windows.Forms.Label();
+            this.lblFrom = new System.Windows.Forms.Label();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.txtMinerName = new System.Windows.Forms.TextBox();
             this.lsbUsers = new System.Windows.Forms.ListBox();
             this.grpAddTransaction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAmount)).BeginInit();
@@ -51,7 +51,7 @@
             // 
             // lsbTransactions
             // 
-            this.lsbTransactions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.lsbTransactions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lsbTransactions.FormattingEnabled = true;
             this.lsbTransactions.Location = new System.Drawing.Point(12, 129);
@@ -96,63 +96,35 @@
             this.grpAddTransaction.TabStop = false;
             this.grpAddTransaction.Text = "Add transaction";
             // 
-            // btnAdd
+            // btnClearAmount
             // 
-            this.btnAdd.Location = new System.Drawing.Point(94, 97);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnClearAmount.Location = new System.Drawing.Point(148, 71);
+            this.btnClearAmount.Name = "btnClearAmount";
+            this.btnClearAmount.Size = new System.Drawing.Size(21, 20);
+            this.btnClearAmount.TabIndex = 10;
+            this.btnClearAmount.Text = "X";
+            this.btnClearAmount.UseVisualStyleBackColor = true;
+            this.btnClearAmount.Click += new System.EventHandler(this.btnClearAmount_Click);
             // 
-            // lblFrom
+            // btnClearTo
             // 
-            this.lblFrom.AutoSize = true;
-            this.lblFrom.Location = new System.Drawing.Point(6, 22);
-            this.lblFrom.Name = "lblFrom";
-            this.lblFrom.Size = new System.Drawing.Size(30, 13);
-            this.lblFrom.TabIndex = 1;
-            this.lblFrom.Text = "From";
+            this.btnClearTo.Location = new System.Drawing.Point(148, 45);
+            this.btnClearTo.Name = "btnClearTo";
+            this.btnClearTo.Size = new System.Drawing.Size(21, 20);
+            this.btnClearTo.TabIndex = 9;
+            this.btnClearTo.Text = "X";
+            this.btnClearTo.UseVisualStyleBackColor = true;
+            this.btnClearTo.Click += new System.EventHandler(this.btnClearTo_Click);
             // 
-            // lblTo
+            // btnClearFrom
             // 
-            this.lblTo.AutoSize = true;
-            this.lblTo.Location = new System.Drawing.Point(6, 48);
-            this.lblTo.Name = "lblTo";
-            this.lblTo.Size = new System.Drawing.Size(20, 13);
-            this.lblTo.TabIndex = 2;
-            this.lblTo.Text = "To";
-            // 
-            // lblAmount
-            // 
-            this.lblAmount.AutoSize = true;
-            this.lblAmount.Location = new System.Drawing.Point(6, 74);
-            this.lblAmount.Name = "lblAmount";
-            this.lblAmount.Size = new System.Drawing.Size(43, 13);
-            this.lblAmount.TabIndex = 3;
-            this.lblAmount.Text = "Amount";
-            // 
-            // txtMinerName
-            // 
-            this.txtMinerName.Location = new System.Drawing.Point(69, 103);
-            this.txtMinerName.Name = "txtMinerName";
-            this.txtMinerName.Size = new System.Drawing.Size(87, 20);
-            this.txtMinerName.TabIndex = 4;
-            // 
-            // txtFrom
-            // 
-            this.txtFrom.Location = new System.Drawing.Point(47, 19);
-            this.txtFrom.Name = "txtFrom";
-            this.txtFrom.Size = new System.Drawing.Size(95, 20);
-            this.txtFrom.TabIndex = 4;
-            // 
-            // txtTo
-            // 
-            this.txtTo.Location = new System.Drawing.Point(47, 45);
-            this.txtTo.Name = "txtTo";
-            this.txtTo.Size = new System.Drawing.Size(95, 20);
-            this.txtTo.TabIndex = 5;
+            this.btnClearFrom.Location = new System.Drawing.Point(148, 19);
+            this.btnClearFrom.Name = "btnClearFrom";
+            this.btnClearFrom.Size = new System.Drawing.Size(21, 20);
+            this.btnClearFrom.TabIndex = 8;
+            this.btnClearFrom.Text = "X";
+            this.btnClearFrom.UseVisualStyleBackColor = true;
+            this.btnClearFrom.Click += new System.EventHandler(this.btnClearFrom_Click);
             // 
             // numAmount
             // 
@@ -166,35 +138,63 @@
             this.numAmount.Size = new System.Drawing.Size(95, 20);
             this.numAmount.TabIndex = 7;
             // 
-            // btnClearFrom
+            // txtTo
             // 
-            this.btnClearFrom.Location = new System.Drawing.Point(148, 19);
-            this.btnClearFrom.Name = "btnClearFrom";
-            this.btnClearFrom.Size = new System.Drawing.Size(21, 20);
-            this.btnClearFrom.TabIndex = 8;
-            this.btnClearFrom.Text = "X";
-            this.btnClearFrom.UseVisualStyleBackColor = true;
-            this.btnClearFrom.Click += new System.EventHandler(this.btnClearFrom_Click);
+            this.txtTo.Location = new System.Drawing.Point(47, 45);
+            this.txtTo.Name = "txtTo";
+            this.txtTo.Size = new System.Drawing.Size(95, 20);
+            this.txtTo.TabIndex = 5;
             // 
-            // btnClearTo
+            // txtFrom
             // 
-            this.btnClearTo.Location = new System.Drawing.Point(148, 45);
-            this.btnClearTo.Name = "btnClearTo";
-            this.btnClearTo.Size = new System.Drawing.Size(21, 20);
-            this.btnClearTo.TabIndex = 9;
-            this.btnClearTo.Text = "X";
-            this.btnClearTo.UseVisualStyleBackColor = true;
-            this.btnClearTo.Click += new System.EventHandler(this.btnClearTo_Click);
+            this.txtFrom.Location = new System.Drawing.Point(47, 19);
+            this.txtFrom.Name = "txtFrom";
+            this.txtFrom.Size = new System.Drawing.Size(95, 20);
+            this.txtFrom.TabIndex = 4;
             // 
-            // btnClearAmount
+            // lblAmount
             // 
-            this.btnClearAmount.Location = new System.Drawing.Point(148, 71);
-            this.btnClearAmount.Name = "btnClearAmount";
-            this.btnClearAmount.Size = new System.Drawing.Size(21, 20);
-            this.btnClearAmount.TabIndex = 10;
-            this.btnClearAmount.Text = "X";
-            this.btnClearAmount.UseVisualStyleBackColor = true;
-            this.btnClearAmount.Click += new System.EventHandler(this.btnClearAmount_Click);
+            this.lblAmount.AutoSize = true;
+            this.lblAmount.Location = new System.Drawing.Point(6, 74);
+            this.lblAmount.Name = "lblAmount";
+            this.lblAmount.Size = new System.Drawing.Size(43, 13);
+            this.lblAmount.TabIndex = 3;
+            this.lblAmount.Text = "Amount";
+            // 
+            // lblTo
+            // 
+            this.lblTo.AutoSize = true;
+            this.lblTo.Location = new System.Drawing.Point(6, 48);
+            this.lblTo.Name = "lblTo";
+            this.lblTo.Size = new System.Drawing.Size(20, 13);
+            this.lblTo.TabIndex = 2;
+            this.lblTo.Text = "To";
+            // 
+            // lblFrom
+            // 
+            this.lblFrom.AutoSize = true;
+            this.lblFrom.Location = new System.Drawing.Point(6, 22);
+            this.lblFrom.Name = "lblFrom";
+            this.lblFrom.Size = new System.Drawing.Size(30, 13);
+            this.lblFrom.TabIndex = 1;
+            this.lblFrom.Text = "From";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(94, 97);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 0;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // txtMinerName
+            // 
+            this.txtMinerName.Location = new System.Drawing.Point(69, 103);
+            this.txtMinerName.Name = "txtMinerName";
+            this.txtMinerName.Size = new System.Drawing.Size(87, 20);
+            this.txtMinerName.TabIndex = 4;
             // 
             // lsbUsers
             // 
@@ -219,6 +219,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.Text = "BasicBlockChain";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.grpAddTransaction.ResumeLayout(false);
             this.grpAddTransaction.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAmount)).EndInit();

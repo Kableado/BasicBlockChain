@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using BasicBlockChain.Core;
+using VAR.Json;
 
 namespace BasicBlockChain
 {
@@ -11,7 +13,7 @@ namespace BasicBlockChain
         public FrmMain()
         {
             InitializeComponent();
-            _nullCoin = new BlockChain(genesisDate: new DateTime(2000, 1, 1), difficulty: 2);
+            InitBlockChain();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -45,6 +47,26 @@ namespace BasicBlockChain
         private void btnClearAmount_Click(object sender, EventArgs e)
         {
             numAmount.Value = 0;
+        }
+
+        private void lsbUsers_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Wallet wallet = (Wallet)lsbUsers.SelectedItem;
+            if (wallet == null) { return; }
+            if (string.IsNullOrEmpty(txtFrom.Text))
+            {
+                txtFrom.Text = wallet.User;
+                return;
+            }
+            if (string.IsNullOrEmpty(txtTo.Text))
+            {
+                txtTo.Text = wallet.User;
+                return;
+            }
+        }
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveBlockChain();
         }
 
         private void Lists_Update()
@@ -88,20 +110,50 @@ namespace BasicBlockChain
             return string.Format("{0} - {1} - {2} - {3}", transaction.Date, transaction.Sender, transaction.Receiver, transaction.MicroCoinAmount);
         }
 
-        private void lsbUsers_MouseDoubleClick(object sender, MouseEventArgs e)
+        private const string BlockChainFile = "BlockChain.json";
+
+        private void InitBlockChain()
         {
-            Wallet wallet = (Wallet)lsbUsers.SelectedItem;
-            if (wallet == null) { return; }
-            if (string.IsNullOrEmpty(txtFrom.Text))
+            FrmMainBlockChain blockChain = null;
+            if (File.Exists(BlockChainFile))
             {
-                txtFrom.Text = wallet.User;
-                return;
+                string contentBlockChainFile = File.ReadAllText(BlockChainFile);
+                blockChain = JsonParser.ParseText(contentBlockChainFile, typeof(FrmMainBlockChain), typeof(BlockChain), typeof(Block), typeof(Transaction)) as FrmMainBlockChain;
             }
-            if (string.IsNullOrEmpty(txtTo.Text))
+
+            if (blockChain != null)
             {
-                txtTo.Text = wallet.User;
-                return;
+                _nullCoin = blockChain.BlockChain;
+                txtMinerName.Text = blockChain.Miner;
             }
+            else
+            {
+                _nullCoin = new BlockChain(genesisDate: new DateTime(2000, 1, 1), difficulty: 2);
+                txtMinerName.Text = string.Empty;
+            }
+            Lists_Update();
         }
+
+        private void SaveBlockChain()
+        {
+            if (File.Exists(BlockChainFile))
+            {
+                File.Delete(BlockChainFile);
+            }
+            FrmMainBlockChain blockChain = new FrmMainBlockChain
+            {
+                BlockChain = _nullCoin,
+                Miner = txtMinerName.Text,
+            };
+            string strBlockChain = JsonWriter.WriteObject(blockChain, indent: true);
+            File.WriteAllText(BlockChainFile, strBlockChain);
+        }
+
+        public class FrmMainBlockChain
+        {
+            public BlockChain BlockChain { get; set; }
+            public string Miner { get; set; }
+
+        };
     }
 }

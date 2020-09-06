@@ -39,8 +39,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VAR.Json, Version=1.1.1.36534, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VAR.Json.1.1.1.36534\lib\net461\VAR.Json.dll</HintPath>
+    <Reference Include="VAR.Json, Version=1.2.0.1065, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VAR.Json.1.2.0.1065\lib\net461\VAR.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

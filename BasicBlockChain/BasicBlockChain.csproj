@@ -50,8 +50,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VAR.Json, Version=1.1.1.36534, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VAR.Json.1.1.1.36534\lib\net461\VAR.Json.dll</HintPath>
+    <Reference Include="VAR.Json, Version=1.2.0.1065, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VAR.Json.1.2.0.1065\lib\net461\VAR.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +63,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicBlockChain.Core\BasicBlockChain.Core.csproj">
@@ -80,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blocks.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,7 @@ namespace BasicBlockChain.Core
     public class BlockChain
     {
         public List<Transaction> PendingTransactions { get; } = new List<Transaction>();
-        public List<Block> Chain { get; } = new List<Block>();
+        public List<Block> Chain { get; set; } = new List<Block>();
         public int Difficulty { get; set; } = 2;
         public int Reward { get; set; } = 1_000_000;
 
@@ -22,6 +22,10 @@ namespace BasicBlockChain.Core
                     InitUsers();
                 }
                 return _users;
+            }
+            set
+            {
+                _users = value;
             }
         }
 
@@ -64,6 +68,8 @@ namespace BasicBlockChain.Core
                 AddUser(transaction.Receiver);
             }
         }
+
+        public BlockChain() { }
 
         public BlockChain(DateTime? genesisDate = null, int difficulty = 2, int reward = 1_000_000)
         {

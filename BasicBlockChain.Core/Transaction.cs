@@ -9,6 +9,8 @@ namespace BasicBlockChain.Core
         public long MicroCoinAmount { get; set; }
         public DateTime Date { get; set; }
 
+        public Transaction() { }
+
         public Transaction(string sender, string receiver, long microCoinAmount, DateTime date)
         {
             Sender = sender;

@@ -11,9 +11,11 @@ namespace BasicBlockChain.Core
         public int Index { get; set; }
         public DateTime Date { get; set; }
         public string PreviousHash { get; set; }
-        public List<Transaction> Transactions { get; } = new List<Transaction>();
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
         public string Hash { get; set; }
         public int Nonce { get; set; }
+
+        public Block() { }
 
         public Block(DateTime date, Block previousBlock, IList<Transaction> transactions)
         {

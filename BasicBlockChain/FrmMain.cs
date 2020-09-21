@@ -110,14 +110,27 @@ namespace BasicBlockChain
             return string.Format("{0} - {1} - {2} - {3}", transaction.Date, transaction.Sender, transaction.Receiver, transaction.MicroCoinAmount);
         }
 
-        private const string BlockChainFile = "BlockChain.json";
+        private const string BlockChainFile = "BlockChain.{0}.json";
+        private const string BlockChainLock = "BlockChain.{0}.lock";
+        private int _currentFile = 0;
 
         private void InitBlockChain()
         {
             FrmMainBlockChain blockChain = null;
-            if (File.Exists(BlockChainFile))
+
+            string blockChainLock;
+            do
             {
-                string contentBlockChainFile = File.ReadAllText(BlockChainFile);
+                blockChainLock = string.Format(BlockChainLock, _currentFile);
+                if (File.Exists(blockChainLock) == false) { break; }
+                _currentFile++;
+            } while (true);
+            File.WriteAllText(blockChainLock, "Lock");
+
+            string blockChainFile = string.Format(BlockChainFile, _currentFile);
+            if (File.Exists(blockChainFile))
+            {
+                string contentBlockChainFile = File.ReadAllText(blockChainFile);
                 blockChain = JsonParser.ParseText(contentBlockChainFile, typeof(FrmMainBlockChain), typeof(BlockChain), typeof(Block), typeof(Transaction)) as FrmMainBlockChain;
             }
 
@@ -136,9 +149,10 @@ namespace BasicBlockChain
 
         private void SaveBlockChain()
         {
-            if (File.Exists(BlockChainFile))
+            string blockChainFile = string.Format(BlockChainFile, _currentFile);
+            if (File.Exists(blockChainFile))
             {
-                File.Delete(BlockChainFile);
+                File.Delete(blockChainFile);
             }
             FrmMainBlockChain blockChain = new FrmMainBlockChain
             {
@@ -146,7 +160,13 @@ namespace BasicBlockChain
                 Miner = txtMinerName.Text,
             };
             string strBlockChain = JsonWriter.WriteObject(blockChain, indent: true);
-            File.WriteAllText(BlockChainFile, strBlockChain);
+            File.WriteAllText(blockChainFile, strBlockChain);
+
+            string blockChainLock = string.Format(BlockChainLock, _currentFile);
+            if (File.Exists(blockChainLock))
+            {
+                File.Delete(blockChainLock);
+            }
         }
 
         public class FrmMainBlockChain

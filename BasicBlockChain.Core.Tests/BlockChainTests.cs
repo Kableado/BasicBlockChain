@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace BasicBlockChain.Core.Tests
 {
-    [TestClass()]
-    public class BlockChain_Tests
+    public class BlockChainTests
     {
         #region Test Data
 
@@ -24,27 +22,27 @@ namespace BasicBlockChain.Core.Tests
 
         #region Verify
 
-        [TestMethod()]
+        [Fact]
         public void Verify__Null()
         {
             BlockChain nullCoin = new BlockChain();
 
             bool result = nullCoin.Verify();
 
-            Assert.AreEqual(true, result);
+            Assert.True(result);
         }
 
-        [TestMethod()]
+        [Fact]
         public void Verify__Valid()
         {
             BlockChain nullCoin = GenerateTestData();
 
             bool result = nullCoin.Verify();
 
-            Assert.AreEqual(true, result);
+            Assert.True(result);
         }
 
-        [TestMethod()]
+        [Fact]
         public void Verify__Tampered()
         {
             BlockChain nullCoin = GenerateTestData();
@@ -52,14 +50,14 @@ namespace BasicBlockChain.Core.Tests
 
             bool result = nullCoin.Verify();
 
-            Assert.AreEqual(false, result);
+            Assert.False(result);
         }
 
         #endregion Verify
 
         #region GetMicroCoinBalance
 
-        [TestMethod()]
+        [Fact]
         public void GetMicroCoinBalance__Test()
         {
             BlockChain nullCoin = GenerateTestData();
@@ -69,9 +67,9 @@ namespace BasicBlockChain.Core.Tests
             long balanceKable = nullCoin.GetMicroCoinBalance("Kable");
             long expectedBlananceKable = nullCoin.Reward * 3;
 
-            Assert.AreEqual(0, balanceVAR);
-            Assert.AreEqual(0, balanceNAM);
-            Assert.AreEqual(expectedBlananceKable, balanceKable);
+            Assert.Equal(0, balanceVAR);
+            Assert.Equal(0, balanceNAM);
+            Assert.Equal(expectedBlananceKable, balanceKable);
         }
 
         #endregion GetMicroCoinBalance

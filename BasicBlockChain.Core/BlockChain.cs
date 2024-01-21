@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace BasicBlockChain.Core
+﻿namespace BasicBlockChain.Core
 {
     public class BlockChain
     {
@@ -11,7 +7,7 @@ namespace BasicBlockChain.Core
         public int Difficulty { get; set; } = 2;
         public int Reward { get; set; } = 1_000_000;
 
-        private List<string> _users = null;
+        private List<string> _users;
 
         public List<string> Users
         {

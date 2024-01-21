@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BasicBlockChain.Core
+﻿namespace BasicBlockChain.Core
 {
     public class Transaction
     {

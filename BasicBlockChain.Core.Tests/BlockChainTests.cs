@@ -6,9 +6,9 @@ namespace BasicBlockChain.Core.Tests
     {
         #region Test Data
 
-        private BlockChain GenerateTestData()
+        private static BlockChain GenerateTestData()
         {
-            BlockChain nullCoin = new BlockChain(genesisDate: new DateTime(2000, 1, 1), difficulty: 2);
+            BlockChain nullCoin = new(genesisDate: new DateTime(2000, 1, 1), difficulty: 2);
             nullCoin.AddTransaction(new Transaction("VAR", "NAM", 10_000_000, new DateTime(2000, 1, 2)));
             nullCoin.ProcessPendingTransactions(new DateTime(2000, 1, 2), "Kable");
             nullCoin.AddTransaction(new Transaction("NAM", "VAR", 5_000_000, new DateTime(2000, 1, 3)));
@@ -25,7 +25,7 @@ namespace BasicBlockChain.Core.Tests
         [Fact]
         public void Verify__Null()
         {
-            BlockChain nullCoin = new BlockChain();
+            BlockChain nullCoin = new();
 
             bool result = nullCoin.Verify();
 
@@ -65,11 +65,11 @@ namespace BasicBlockChain.Core.Tests
             long balanceVAR = nullCoin.GetMicroCoinBalance("VAR");
             long balanceNAM = nullCoin.GetMicroCoinBalance("NAM");
             long balanceKable = nullCoin.GetMicroCoinBalance("Kable");
-            long expectedBlananceKable = nullCoin.Reward * 3;
+            long expectedBalanceKable = nullCoin.Reward * 3;
 
             Assert.Equal(0, balanceVAR);
             Assert.Equal(0, balanceNAM);
-            Assert.Equal(expectedBlananceKable, balanceKable);
+            Assert.Equal(expectedBalanceKable, balanceKable);
         }
 
         #endregion GetMicroCoinBalance

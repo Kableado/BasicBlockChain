@@ -2,8 +2,8 @@
 {
     public class BlockChain
     {
-        public List<Transaction> PendingTransactions { get; } = new List<Transaction>();
-        public List<Block> Chain { get; set; } = new List<Block>();
+        public List<Transaction> PendingTransactions { get; } = new();
+        public List<Block> Chain { get; set; } = new();
         public int Difficulty { get; set; } = 2;
         public int Reward { get; set; } = 1_000_000;
 
@@ -69,7 +69,7 @@
 
         public BlockChain(DateTime? genesisDate = null, int difficulty = 2, int reward = 1_000_000)
         {
-            Block genesisBlock = new Block(genesisDate ?? DateTime.UtcNow, null, null);
+            Block genesisBlock = new(genesisDate ?? DateTime.UtcNow, null, null);
             genesisBlock.Mine(difficulty);
             Difficulty = difficulty;
             Reward = reward;
@@ -79,7 +79,7 @@
         public void AddBlock(DateTime date, IList<Transaction> transactions)
         {
             Block lastBlock = Chain.Last();
-            Block newBlock = new Block(date, lastBlock, transactions);
+            Block newBlock = new(date, lastBlock, transactions);
             newBlock.Mine(Difficulty);
             AddUsersOfBlock(newBlock);
             Chain.Add(newBlock);
@@ -93,7 +93,7 @@
         public void ProcessPendingTransactions(DateTime date, string miner)
         {
             Block lastBlock = Chain.Last();
-            Block newBlock = new Block(date, lastBlock, PendingTransactions);
+            Block newBlock = new(date, lastBlock, PendingTransactions);
             newBlock.Transactions.Add(new Transaction(null, miner, Reward, date));
             newBlock.Mine(Difficulty);
             AddUsersOfBlock(newBlock);

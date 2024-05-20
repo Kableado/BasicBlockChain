@@ -9,7 +9,7 @@ namespace BasicBlockChain.Core
         public int Index { get; set; }
         public DateTime Date { get; set; }
         public string PreviousHash { get; set; }
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public List<Transaction> Transactions { get; set; } = new();
         public string Hash { get; set; }
         public int Nonce { get; set; }
 

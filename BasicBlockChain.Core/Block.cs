@@ -1,8 +1,10 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using VAR.Json;
+using System.Text.Json;
+//using VAR.Json;
 
 namespace BasicBlockChain.Core
 {
@@ -29,7 +31,9 @@ namespace BasicBlockChain.Core
 
         private string GetData()
         {
-            return JsonWriter.WriteObject(Transactions);
+            //return JsonWriter.WriteObject(Transactions);
+            //return string.Join("-", Transactions); // Placeholder
+            return JsonSerializer.Serialize(Transactions);
         }
 
         public string CalculateHash(string data = null, SHA256 sha256 = null)

@@ -1,0 +1,102 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:BasicBlockChain.AvaloniaUI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+        x:Class="BasicBlockChain.AvaloniaUI.MainWindow"
+        x:DataType="vm:MainWindowViewModel" 
+        Title="Basic BlockChain UI">
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Grid RowDefinitions="Auto,*,*" ColumnDefinitions="*,*" Margin="10">
+        <!-- Row 0: Inputs and Mining -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Spacing="10">
+            <!-- Transaction Input Area -->
+            <Border Classes="SectionBorder">
+                <StackPanel Orientation="Vertical" Spacing="5" Margin="10">
+                    <TextBlock Text="Transaction Details" Classes="HeaderTextBlock"/>
+                    <!-- From -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="From:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="FromTextBox" Text="{Binding FromText}" Watermark="Sender Address"/>
+                        <Button Grid.Row="0" Grid.Column="2" Name="ClearFromButton" Command="{Binding ClearFromCommand}" Content="Clear" Margin="5,0,0,0"/>
+                    </Grid>
+                    <!-- To -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="To:    " VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="ToTextBox" Text="{Binding ToText}" Watermark="Receiver Address"/>
+                        <Button Grid.Row="0" Grid.Column="2" Name="ClearToButton" Command="{Binding ClearToCommand}" Content="Clear" Margin="5,0,0,0"/>
+                    </Grid>
+                    <!-- Amount -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Amount:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <NumericUpDown Grid.Row="0" Grid.Column="1" Name="AmountNumericUpDown" Value="{Binding AmountValue}" Minimum="0"/>
+                        <Button Grid.Row="0" Grid.Column="2" Name="ClearAmountButton" Command="{Binding ClearAmountCommand}" Content="Clear" Margin="5,0,0,0"/>
+                    </Grid>
+                    <Button Name="AddTransactionButton" Command="{Binding AddTransactionCommand}" Content="Add Transaction" HorizontalAlignment="Stretch" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Mining Area -->
+            <Border Classes="SectionBorder">
+                <StackPanel Orientation="Vertical" Spacing="5" Margin="10">
+                    <TextBlock Text="Mining" Classes="HeaderTextBlock"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Miner Name:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="MinerNameTextBox" Text="{Binding MinerNameText}" Watermark="Your Name/Address"/>
+                    </Grid>
+                    <Button Name="MineButton" Command="{Binding MineCommand}" Content="Mine Block" HorizontalAlignment="Stretch" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Row 1: Pending Transactions -->
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Classes="SectionBorder" Margin="0,10,0,0">
+             <StackPanel Orientation="Vertical" Spacing="5" Margin="5">
+                <TextBlock Text="Pending Transactions" Classes="HeaderTextBlock"/>
+                <ListBox Name="PendingTransactionsListBox" ItemsSource="{Binding PendingTransactionsItems}" MinHeight="150"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Row 2, Column 0: Blocks/Transactions -->
+        <Border Grid.Row="2" Grid.Column="0" Classes="SectionBorder" Margin="0,10,5,0">
+            <StackPanel Orientation="Vertical" Spacing="5" Margin="5">
+                <TextBlock Text="Blocks / Chain Transactions" Classes="HeaderTextBlock"/>
+                <ListBox Name="BlocksListBox" ItemsSource="{Binding BlocksItems}" MinHeight="200"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Row 2, Column 1: Users/Wallets -->
+        <Border Grid.Row="2" Grid.Column="1" Classes="SectionBorder" Margin="5,10,0,0">
+            <StackPanel Orientation="Vertical" Spacing="5" Margin="5">
+                <TextBlock Text="Users / Wallets" Classes="HeaderTextBlock"/>
+                <ListBox Name="UsersListBox" 
+                         ItemsSource="{Binding UserWalletItems}" 
+                         SelectedItem="{Binding SelectedUserWallet}" 
+                         MinHeight="200">
+                    <!-- DoubleTapped event will be handled by a behavior or code-behind if necessary,
+                         for now, SelectedItem binding is the key for the ViewModel. -->
+                </ListBox>
+            </StackPanel>
+        </Border>
+    </Grid>
+
+    <Window.Styles>
+        <Style Selector="Border.SectionBorder">
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style Selector="TextBlock.HeaderTextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+    </Window.Styles>
+</Window>
